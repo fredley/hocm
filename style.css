@@ -52,10 +52,6 @@ h1 {
     margin-top: 3rem;
 }
 
-footer {
-    margin-bottom: 10rem;
-}
-
 .col.socials {
     font-size: 2rem;
     margin-bottom: 3rem;
@@ -79,6 +75,7 @@ footer {
     position: relative;
     padding-bottom: 56.25%; /* 16:9 */
     height: 0;
+    transition: opacity 0.2s ease-in-out;
 }
 .embedWrapper iframe {
     position: absolute;
@@ -102,6 +99,30 @@ footer {
 
 #sub-breakout .row {
     margin-top: 0;
+}
+
+.ac-footer {
+    width: 100%;
+    background: #a0a0a0;
+    padding-bottom: 5rem;
+    padding-top: 5rem;
+    margin-top: 4rem;
+}
+
+.ac-footer p {
+    text-align: left;
+}
+
+.ac-footer a{
+    color: #000;
+}
+
+.logo-fl {
+    filter: grayscale(100%);
+    float: left;
+    display: block;
+    height: 7rem;
+    margin: -2rem 1rem 0 0;
 }
 
 @media only screen and (max-width: 559px) {

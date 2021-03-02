@@ -1,10 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Humans of Classical Music</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Primary Meta Tags -->
+    <title>Humans of Classical Music</title>
+    <meta name="title" content="Humans of Classical Music">
+    <meta name="description" content="Musicians, actors, comedians and podcasters from around the world give you their classical music recommendations. Sign up to receive a new video every Thursday.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://humansofclassicalmusic.co.uk/">
+    <meta property="og:title" content="Humans of Classical Music">
+    <meta property="og:description" content="Musicians, actors, comedians and podcasters from around the world give you their classical music recommendations. Sign up to receive a new video every Thursday.">
+    <meta property="og:image" content="https://humansofclassicalmusic.co.uk/banner.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://humansofclassicalmusic.co.uk/">
+    <meta property="twitter:title" content="Humans of Classical Music">
+    <meta property="twitter:description" content="Musicians, actors, comedians and podcasters from around the world give you their classical music recommendations. Sign up to receive a new video every Thursday.">
+    <meta property="twitter:image" content="https://humansofclassicalmusic.co.uk/banner.jpg">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -27,13 +54,13 @@
   <body>
       <div class="container">
         <h1>
-            <a href="https://alternativeclassical.co.uk"><img src="ac.png" class="logo" alt="Alternative Classical"></a>
+            <a href="https://alternativeclassical.co.uk" target="_blank"><img src="ac.png" class="logo" alt="Alternative Classical"></a>
             Humans&nbsp;of&nbsp;Classical&nbsp;Music
         </h1>
         <div class="row">
           <div class="col-sm">
-            <p>Classical music can be surprising, exhilarating, dramatic, quirky, funny, captivating and comforting, sometimes all at the same time. Musicians, actors, comedians and podcasters from around the world are here to give you their personal recommendations. Sign up to receive one new video every Thursday in 2021, and follow the <a href="https://open.spotify.com/playlist/5LzUwqX2mdSoqpqNLKxdL3">Spotify&nbsp;playlist</a> to hear all the tracks. </p>
-<p>The doors to the classical labyrinth swing open on Thursday&nbsp;4th&nbsp;February&nbsp;2021...</p>
+            <p>Classical music can be surprising, exhilarating, dramatic, quirky, funny, captivating and comforting, sometimes all at the same time. Musicians, actors, comedians and podcasters from around the world are here to give you their personal recommendations. </p>
+            <p><a href="http://eepurl.com/hocvCD">Sign up</a> to receive a new video every Thursday, and follow the <a href="https://open.spotify.com/playlist/5LzUwqX2mdSoqpqNLKxdL3" target="_blank">Spotify&nbsp;playlist</a> to hear all the tracks. </p>
           </div>
         </div>
       </div>
@@ -54,31 +81,16 @@
       <div class="container">
         <div class="row">
             <div class="col-sm video">
-                <h3>Watch the videos</h3>
-                <div class="embedWrapper">
-                    <iframe
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/videoseries?list=PLeb4OY39Vyh8DNR3GrzWGHuc5UqToYjWw"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                    ></iframe>
+                <h3 class="video-info">Watch the videos</h3>
+                <div class="embedWrapper" style="opacity:0;">
+                  <div id="player"></div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm playlist">
                 <h3>Listen to the playlist</h3>
-                <div class="embedWrapper">
-                    <iframe
-                        src="https://open.spotify.com/embed/playlist/5LzUwqX2mdSoqpqNLKxdL3"
-                        width="560"
-                        height="315"
-                        frameborder="0"
-                        allowtransparency="true"
-                        allow="encrypted-media">
-                    </iframe>
+                <div class="embedWrapper spotify">
                 </div>
             </div>
         </div>
@@ -109,6 +121,96 @@
                 kofiwidget2.draw();
             </script>
           </div>
-      </footer>
+        </footer>
+        <div class="ac-footer">
+          <div class="container">
+              <p><a href="https://alternativeclassical.co.uk" target="_blank"><img src="ac.png" alt="Alternative Classical" class="logo-fl"></a>
+              <span>Humans&nbsp;of&nbsp;Classical&nbsp;Music is an <a href="https://alternativeclassical.co.uk">Alternative&nbsp;Classical</a>&nbsp;project</span></p>
+          </div>
+        </div>
+    <script>
+      let player
+      let cued = false
+      let shown = false
+      let ytready = false
+      let jqready = false
+      let loader = 0
+
+      $(document).ready(() => {
+        console.log('doc ready')
+        var tag = document.createElement('script')
+
+        tag.src = "https://www.youtube.com/iframe_api"
+        var firstScriptTag = document.getElementsByTagName('script')[0]
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+
+        jqready = true
+        if (ytready) {
+          loadplayer()
+        }
+      })
+
+      function onYouTubeIframeAPIReady() {
+        console.log('yt ready')
+        ytready = true
+        if (jqready) {
+          loadplayer()
+        }
+      }
+
+      const loadplayer = () => {
+        console.log('loading')
+        if (player === undefined){
+          player = new YT.Player('player', {
+            height: '315',
+            width: '560',
+            host: `${window.location.protocol}//www.youtube.com`,
+            origin: `${window.location.protocol}//${window.location.host}`,
+            playerVars: {
+              listType: 'playlist',
+              list: 'PLeb4OY39Vyh8DNR3GrzWGHuc5UqToYjWw',
+            },
+            suggestedQuality: 'hd',
+            events: {
+              onReady: onPlayerReady,
+              onError: onPlayerError,
+              onStateChange: onPlayerStateChange,
+            }
+          })
+          loader = setInterval(loadplayer, 2000)
+        } else {
+          console.log('loaded')
+          clearInterval(loader)
+        }
+      }
+
+      const onPlayerReady = () => {
+          const playlist = player.getPlaylist()
+          player.loadPlaylist(playlist.reverse())
+        }
+
+      const onPlayerError = (event) => {
+          console.log(event)
+        }
+
+        const onPlayerStateChange = (event) => {
+          if(event.data == YT.PlayerState.BUFFERING) {
+            cued = true
+          }
+          if (cued && event.data === -1 && !shown){
+            $(".video-info").text(`Latest: ${event.target.getVideoData().title.replace(", Humans of Classical Music", "")}`)
+            $(".embedWrapper").css("opacity", 1)
+            shown = true
+            $(".spotify").html(`<iframe
+                        src="https://open.spotify.com/embed/playlist/5LzUwqX2mdSoqpqNLKxdL3"
+    width="560"
+    height="315"
+    frameborder="0"
+    allowtransparency="true"
+    allow="encrypted-media">
+</iframe>`)
+          }
+      }
+    </script>
   </body>
 </html>
